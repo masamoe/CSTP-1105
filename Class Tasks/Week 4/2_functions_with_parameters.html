@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JavaScript Functions 2</title>
+        <style>
+            body {
+                font-family: helvetica;
+            }
+            em { 
+                font-weight:bold; font-style:normal; 
+                text-decoration:underline; font-size:1.2em; 
+            }
+            h1 {
+                text-align:center;
+            }
+            ol {
+                list-style: none;
+                counter-reset: item;
+                width: 700px; 
+                position: relative; 
+                left: 50%; 
+                margin-left: -350px;
+            }
+            ol > li {
+                counter-increment: item;
+                margin-bottom: 20px;
+            }
+            ol > li:before {
+                margin-right: 10px;
+                content: counter(item);
+                background: crimson;
+                border-radius: 100%;
+                color: white;
+                width: 1.3em;
+                text-align: center;
+                display: inline-block;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>JavaScript Functions 2 with Parameters</h1>
+
+        <ol>
+            <li><em>Using Parameters</em>
+                <br/>
+                Create a single function that makes use of parameters. The function should create a console.log that says "X is a student in VCC". Call this function 3 times total, each time displaying a different student's name. No need to use loops.
+            </li>
+            <script>
+                
+                function student(name) {
+                    console.log(`${name} is a student at VCC.`);
+                };
+
+                student("Jake");
+                student("Mark");
+                student("Joy");
+
+            </script>
+
+
+            <li><em>Names and Ages</em>
+                <br/>
+                Create a single function that takes in two parameters. The first parameter is a name and the second should be an age. The function should create a console.log that reads "X is Y years old. In 5 years time they will be Z years old". Call this function 3 more times using different names and ages.
+            </li>
+            <script>
+                
+                function nameAge(name, age) {
+                    console.log(`${name} is ${age} years old. In 5 years time they will be ${age + 5} years old.`);
+                };
+
+                nameAge("jake", 30);
+                nameAge("bob", 40);
+                nameAge("paula", 25);
+
+            </script>
+
+
+            <li><em>More String Parameters</em>
+                <br/>
+                Create a single function that takes in 3 parameters. The three parameters should be firstName, lastName and middleName. Make sure to set a default value of an empty string "" for middleName as not all people have one. The function should console.log "Welcome firstName middleName lastName to VCC". Test this function out three times total using different names.
+            </li>
+            <script>
+                
+                function welcome(first, middle = "", last) {
+                    console.log(`Welcome ${first} ${middle} ${last} to VCC.`);
+                };
+
+                welcome("jacob", "daniel", "dobrinsky");
+                welcome("first", "middle", "last");
+                welcome("john", "paul", "george");
+
+            </script>
+
+
+            <li><em>Multiply Numbers</em>
+                <br/>
+                Create a function that takes in two numbers as parameters and multiplies them together. The function should create a console.log that reads "Y * Z = X" where Y and Z are the parameters.
+            </li>
+            <script>
+                
+                function multip(x, y) {
+                    console.log(`${x} * ${y} = ${x*y}`);
+                };
+
+                multip(3, 5);
+
+            </script>
+
+
+            <li><em>Divide Numbers</em>
+                <br/>
+                Create a function that takes in two numbers as parameters and divides the first by the second. The function should create a console.log that reads "Y / Z = X" where Y and Z are the parameters. <strong>Ensure that if the function isn't supplied parameters that default values of 1 are used in their place e.g. <code>myFunct(8)</code> should log "8 / 1 = 1"</strong>
+            </li>
+            <script>
+                
+                function divide(x = 1, y = 1) {
+                    console.log(`${x} / ${y} = ${x/y}`);
+                };
+
+                divide(3, 5);
+                divide();
+
+            </script>
+
+
+            <li><em>Add Numbers</em>
+                <br/>
+                Create a function that takes in two numbers as parameters and adds them together. The function should create a console.log that reads "Y + Z = X" where Y and Z are the parameters. <strong>Ensure that if the function isn't supplied parameters that default values of 0 are used in their place e.g. <code>myFunct()</code> should log "0 + 0 = 0"</strong>. Also check to make sure that numbers are being used for the parameters. If they are not than log "ERROR" and don't perform the addition.
+            </li>
+            <script>
+                
+                function add(x = 0, y = 0) {
+                    if (isNaN(x) || isNaN(y)) {
+                        console.log("ERROR")
+                    }
+                    else {console.log(`${x} + ${y} = ${x+y}`);
+                    };
+                };
+
+                add(3, 5);
+                add();
+                add("f", 3);
+
+            </script>
+
+
+            <li><em>Arrays as Parameters</em>
+                <br/>
+                Create a function that takes in an array as a parameter. Console.log "There are X elements inside this array". Test your function out on the provided arrays.</em>
+            </li>
+            <script>
+
+                const arr1 = [1, 2, 3, 4, 5, 6];
+                const arr2 = ["A", "B", "C"];
+                const arr3 = [];
+
+                function arrLength(array) {
+                    console.log(`There are ${array.length} elements inside this array`)
+                };
+
+                arrLength(arr1);
+                arrLength(arr2);
+                arrLength(arr3);
+                
+            </script>
+
+
+            <li><em>Biggest Array</em>
+                <br/>
+                Create a function that takes in 2 parameters that are both arrays. First check to make sure that both parameters are arrays. If they aren't, console.log "ERROR". If they are console.log the array that has the most items inside of it.
+            </li>
+            <script>
+
+                const testArr1 = ["A", "B", "C", "D", "E", "F"];
+                const testArr2 = ["A", "B", "C"];
+
+                function arrBig(array1, array2) {
+                    if (array1 instanceof Array && array2 instanceof Array) {
+                        if (array1.length > array2.length) {
+                            console.log(array1)
+                        }
+                        else {
+                            console.log(array2)
+                        }
+                    }
+                    else {
+                        console.log("ERROR");
+                    }; 
+                };
+
+                arrBig(testArr1, testArr2);
+                
+            </script>
+
+
+            <li><em>Remove Elements from Array</em>
+                <br/>
+                Create a function that takes in an array as the first parameter and a number as the second parameter. The number giving should indicate how many elements to remove from the end of the array e.g. if the functions gets <code>["A", "B", "C"];</code> and the number 2 then the function should output the following "The new array is ["A"]". If the number exceeds the number of items in the array then the function should output an empty array.
+            </li>
+            <script>
+
+                const testArrA = ["A", "B", "C", "D", "E", "F"];
+                const testArrB = ["A", "B", "C"];
+
+                function cut(a = [], b = 0) {
+                    let i = 0
+                    while (i < b) {
+                        a.pop();
+                        i++
+                    };
+                    console.log(a);
+                };
+
+                cut(testArrA, 5);
+                cut(testArrB, 5);
+                
+            </script>
+
+
+            <li><em>Check if Arrays have Same Items</em>
+                <br/>
+                Create a function that takes in two 2 different arrays. Write code in the function that checks to see if the two arrays have the exact same items. Console.log all items that appear in both arrays if they share the same items. You are given 3 arrays below to test out your function. Call your function 3 times to check if <code>arrA</code> and <code>arrB</code> share, if <code>arrB</code> and <code>arrC</code> share and if <code>arrA</code> and <code>arrC</code> share.
+            </li>
+            <script>
+
+                const arrA = ["sand", "grass", "water"];
+                const arrB = ["mud", "sand", "oil", "water"];
+                const arrC = ["fire", "air", "mud"];
+
+                
+                
+            </script>
+        </ol>
+
+        <script>
+
+        </script>
+    </body>
+</html>

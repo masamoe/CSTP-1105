@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tick Tac Toe</title>
+        <style>
+            body {
+                align-items: center;
+                display: flex;
+                font-family: helvetica;
+                height: 100vh;
+                justify-content: center;
+                margin: 0;
+                overflow: hidden;
+                padding: 0;
+                width: 100%;
+            }
+            .background-letter {
+                font-family: courier new;
+                font-size: 100px;
+                font-weight: bold;
+                line-height: 0;
+                opacity: .05;
+                position: absolute;
+            }
+            .grid {
+                background: white;
+                display: grid;
+                grid-column-gap: 3.5%;
+                grid-row-gap: 3.5%;
+                grid-template-columns: 31% 31% 31%;
+                grid-template-rows: 31% 31% 31%;
+                height: 360px;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 360px;
+                width: 100%;
+                z-index: 99;
+            }
+            .btn {
+                background: #e4a1ff;
+                border: none;
+                color: white;
+                cursor: pointer;
+                font-size: 90px;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+                transition: box-shadow .5s;
+            }
+            .btn:hover {
+                border: solid 3px white;
+            }
+            .btn:active {
+                border: solid 6px white;
+            }
+
+            #turn {
+                font-size: 50px;
+                position: fixed;
+                text-align: center;
+                top: 50%;
+                margin-top: -280px;
+                z-index: 100;
+            }
+            #reset {
+                border-radius: 6px;
+                border: solid 3px black;
+                cursor: pointer;
+                font-size: 30px;
+                font-weight: bold;
+                margin-top: 230px;
+                padding: 10px 30px;
+                position: fixed;
+                text-align: center;
+                top: 50%;
+                z-index: 100;
+            }
+            #reset:active {
+                font-size: 25px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1 id="turn">X's Turn</h1>
+        <span class="background-letter">X</span>
+
+        <div class="grid">
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+        </div>
+
+        <button id="reset">Reset</button>
+
+        <script>
+        	// ==============
+        	// Tic Tac Toe
+        	// ==============
+            // Global Variables
+             
+            // Test game arrays
+            const test1 = [ "X", "O", "X", "O", "X", "", "O", "", "X" ]; // X won
+            const test2 = [ "O", "O", "X", "O", "", "", "O", "X", "X" ]; // O won
+            const test3 = [ "X", "O", "X", "X", "O", "", "O", "", "X" ]; // No win
+            
+
+            // Grabbing HTML components
+            const BODY = document.getElementsByTagName("body")[0];
+            const ALL_BTNS = document.getElementsByClassName("btn");
+             
+            
+        </script>
+    </body>
+</html>

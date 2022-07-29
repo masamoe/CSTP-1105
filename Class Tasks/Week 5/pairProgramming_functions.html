@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pair Programming</title>
+        <style>
+            body {
+                font-family: helvetica;
+            }
+            h1 {
+                color: crimson;
+            }
+            em { 
+                font-weight: bold; 
+                font-style: normal; 
+                text-decoration: underline; 
+                font-size: 1.2em; 
+            }
+            li {
+                margin: 20px;
+            }
+            ol { 
+                width: 700px; 
+                position: relative; 
+                left: 50%; 
+                margin-left: -350px;
+            }
+            ol > li > ol > li {
+                margin: 10px;
+            }
+            p { 
+                width: 700px; 
+                position: relative; 
+                left: 50%; 
+                margin-left: -350px;
+            }
+            h1 {
+                text-align:center;
+            }
+            ul > li {
+                margin-top: 0; 
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Pair Programming</h1>
+
+        <p>
+            Pair programming is a software development technique in which two programmers work together at the same workstation on the same project. One, the <strong>driver</strong>, writes code while the other, the <strong>observer</strong> or navigator, reviews each line of code as it is typed in. The two programmers switch roles frequently. Talking, discussing and explaining are highly encouraged.
+        </p>
+
+        <ol>
+
+            <li><em>Number Functions</em>
+                <br>
+                Write code and use functions that take in a single array and checks to see that all items are numbers. If they are, your code should produce the following console.log:<br>
+                "There are (X) numbers in this array.<br>
+                 The total sum of all numbers is (Y).<br>
+                 The average of all numbers is (Z).<br>
+                 The are (A) numbers that are greater than 10.<br>
+                 The largest number in the array is (W)"<br><br>
+
+                If the array contains an item that is not a number, or multi items that are not numbers, your code should just console.log "ERROR: (B), (C), (D) are/is not a number".<br><br>
+
+                Try to use multiple functions in your code to have it organised better. For instance one function could calculate and return the sum of the array, another code check to see if the array contains numbers and return true or false etc. Then one main function could call these to perform the program.
+            </li>
+
+            <script>
+                // ====================
+                // Pair Programming
+                // ====================
+                const testArr1 = [20, 30, 40, 50];
+                const testArr2 = [200, 3, 13, 22, 29, 35, 121, 78, 80, 91];
+                const testArr3 = [20, 30, 40, "James", 12];
+                const testArr4 = [2, 3, 13, 22, 9, 44, [], 35, 121, 3, 0, "James", 12, -25];
+                // defining function 
+                function pairFunc(arrInput = []) {
+                    // defining variables
+                    const notNumber = [];
+                    let boolNumber = true;
+                    let sum = 0;
+                    const biggerTenArr = []
+                    let largestNum = 0
+                    // to check if it is a number
+                    for (let instance of arrInput) {
+                        if (typeof instance !== "number") {
+                            notNumber.push(instance);
+                            boolNumber = false;
+                        }
+                        // formulas for if it is a number
+                        else if (boolNumber === true) {
+                            sum += instance;
+                            if (instance > 10) {
+                                biggerTenArr.push(instance)
+                            };
+                            if (instance > largestNum) {
+                                largestNum = instance
+                            };
+                        };
+                    };
+                    //calculating average
+                    const average = sum/arrInput.length;
+                    //logs based on whether the array contains a non-number
+                    if (boolNumber === true) {
+                        return (`There are ${arrInput.length} numbers in array.\nThe total sum of all numbers is ${sum}.\nThe average of all numbers is ${average}.\nThe are ${biggerTenArr.length} numbers that are greater than 10.\nThe largest number in the array is ${largestNum}.`);
+                    } 
+                    else { return `ERROR: ${notNumber} are/is not a number`} ;
+                };
+
+                console.log(pairFunc(testArr1));
+                console.log(pairFunc(testArr2));
+                console.log(pairFunc(testArr3));
+                console.log(pairFunc(testArr4));
+
+
+
+
+            </script>
+        </ol>    
+    </body>
+</html>

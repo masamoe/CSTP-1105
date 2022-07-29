@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Classes Canvas</title>
+    <style>
+        body {
+            font-family: helvetica;
+        }
+
+        em {
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: underline;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ol {
+            list-style: none;
+            counter-reset: item;
+            width: 700px;
+            position: relative;
+            left: 50%;
+            margin-left: -350px;
+        }
+
+        ol>li {
+            counter-increment: item;
+            margin-bottom: 20px;
+        }
+
+        ol>li:before {
+            margin-right: 10px;
+            content: counter(item);
+            background: crimson;
+            border-radius: 100%;
+            color: white;
+            width: 1.3em;
+            text-align: center;
+            display: inline-block;
+        }
+
+        #canvas {
+            border: solid 1px red;
+            width: 770px;
+            height: 500px;
+        }
+
+        .images {
+            width: 31%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Classes</h1>
+
+    <ol>
+        <li><em>Create an Interactive Map of Canada using Classes, the HTML5 Canvas and JavaScript</em>
+            <br />
+            The HTML5 Canvas allows us to draw shapes and create interactive games on the web using JavaScript.
+            <br>
+            Below you'll find code showing how to draw a simple rectangle. The shapes require an x and y coordinate (x =
+            0 is most left position), (y = 0 is the top most position) as well as a number for width and height.
+            <br>
+            <code>ctx.fillRect(x, y, w, h)</code>
+            <br>
+            <ul>
+                <li>
+                    Using a class to create objects representing each of the Canadian provinces, write code to draw each
+                    of the shapes on the canvas.
+                </li>
+                <li>
+                    Code has been provided to show you how to add a "click" event to the canvas and to read the x and y
+                    coordinates of where the click occured.
+                </li>
+                <li>
+                    Write code that will allow you to click a shape on the convas and show an <code>alert()</code>
+                    saying "X is clicked. It has a population of YYYY" where X is the province and YYYY is the
+                    population size. You may have to use object methods in conjunction with the "click" event.
+                </li>
+                <li>
+                    Write code so that when you hover over a shape it draws the province initials in the top left
+                    position.
+                </li>
+                <li>
+                    Write code so that when you hover off the shape it removes the province initials from it. You may
+                    have to redraw the shape over the text to give the appearance if it being removed.
+                </li>
+            </ul>
+            <br>
+            <br>
+
+            <img class="images" src="canada_1.png" />
+            <img class="images" src="canada_2.png" />
+            <img class="images" src="canada_3.png" />
+        </li>
+        <li>
+            <em>Your Canvas</em>
+            <canvas id="canvas" width="770" height="500"></canvas>
+        </li>
+
+        <script>
+            const canvas = document.getElementById('canvas');
+
+
+            // ctx refers to the canvas context and is used to draw
+            // and append things to the canvas
+            const ctx = canvas.getContext('2d');
+
+            // fillStyle refers to the colour being used. It is sticky so all
+            // shapes being drawn after this line of code will be that colour
+            // until it is changed.
+            // ctx.fillStyle = "#f00";
+
+            // fillRect draws a rectangle at the x and y position. The w width
+            // and h height are extended left and down from that position
+            //           x,   y,  w,  h
+            // ctx.fillRect(40, 20, 50, 50);
+
+            // ctx.fillStyle = "#0f0";
+            // ctx.fillRect(300, 100, 150, 90);
+
+            // This adds a "Click" event to the canvas and some code to
+            // run after each time the user clicks the canvas. In this
+            // case the code will console.log the mouse's x and y position 
+            // on the canvas when it is clicked by the mouse
+            let mouseX = 0;
+            let mouseY = 0;
+            let oldX = 0;
+            let oldY = 0;
+            let oldW = 0;
+            let oldH = 0;
+            let oldColour = "white";
+            ctx.font = "15px Arial";
+
+            class Province {
+                constructor(x, y, w, h, colour, name, abrev, pop) {
+                    ctx.fillStyle = colour;
+                    this.colour = colour;
+                    this.x = x;
+                    this.y = y;
+                    this.w = w;
+                    this.h = h;
+                    this.body = ctx.fillRect(x, y, w, h);
+                    this.name = name;
+                    this.abrev = abrev;
+                    this.pop = pop;
+                    this.drawn = false;
+                }
+                mouseHover(mouseX, mouseY) {
+                    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h && this.drawn === false) {
+                        ctx.fillStyle = "black"
+                        ctx.fillText(this.abrev, this.x + 5, this.y + 30);
+                        this.drawn = true;
+                    }
+                    else if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {}
+                    else {
+                        ctx.fillStyle = oldColour;
+                        ctx.fillRect(oldX, oldY, oldW, oldH);
+                        oldX = this.x;
+                        oldY = this.y;
+                        oldW = this.w;
+                        oldH = this.h;
+                        oldColour = this.colour;
+                        this.drawn = false;
+                    };
+                }
+                mouseClick(mouseX, mouseY) {
+                    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+                        alert(`${this.name} is clicked. It has a population of ${this.pop}.`);
+                    };
+                }
+            };
+
+            const yk = new Province(0, 30, 100, 200, "blue", "Yukon Territories", "YK", 43025);
+            const nwt = new Province(100, 30, 200, 200, "lime", "Northwest Territories", "NWT", 44826);
+            const nu = new Province(300, 10, 130, 220, "purple", "Nunavut", "NU", 40103);
+            const bc = new Province(0, 230, 100, 230, "lightblue", "British Columbia", "BC", 5286528);
+            const ab = new Province(100, 230, 100, 200, "green", "Alberta", "AB", 4500917);
+            const sk = new Province(200, 230, 100, 200, "yellow", "Saskatchewan", "SK", 1186308);
+            const mb = new Province(300, 230, 80, 200, "orange", "Manitoba", "MA", 1393179);
+            const on = new Province(380, 270, 150, 200, "red", "Ontario", "ON", 15007816);
+            const qb = new Province(530, 200, 120, 250, "pink", "Quebec", "QB", 8653184);
+            const lab = new Province(650, 220, 80, 50, "seagreen", "Newfoundland and Labrador", "LAB", 522875);
+            const pei = new Province(660, 300, 50, 50, "orangered", "Prince Edward Island", "PEI", 167680);
+            const nb = new Province(650, 360, 30, 80, "purple", "New Brunswick", "NB", 800243);
+            const ns = new Province(680, 360, 30, 80, "brown", "Nova Scotia", "NS", 1007049);
+
+            const provinces = [yk, nwt, nu, bc, ab, sk, mb, on, qb, lab, pei, nb, ns];
+
+            canvas.addEventListener('click', function (event) {
+                console.log(event.offsetX, event.offsetY);
+                mouseX = event.offsetX;
+                mouseY = event.offsetY;
+                for (let prov of provinces) {
+                    prov.mouseClick(mouseX, mouseY);
+                };
+            });
+
+            canvas.addEventListener('mousemove', function (event) {
+                console.log(event.offsetX, event.offsetY);
+                mouseX = event.offsetX;
+                mouseY = event.offsetY;
+                for (let prov of provinces) {
+                    prov.mouseHover(mouseX, mouseY);
+                };
+            });
+
+
+
+        </script>
+    </ol>
+</body>
+
+</html>

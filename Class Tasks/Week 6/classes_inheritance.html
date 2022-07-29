@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Class Inheritance</title>
+    <style>
+        body {
+            font-family: helvetica;
+        }
+
+        em {
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: underline;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ol {
+            list-style: none;
+            counter-reset: item;
+            width: 700px;
+            position: relative;
+            left: 50%;
+            margin-left: -350px;
+        }
+
+        ol>li {
+            counter-increment: item;
+            margin-bottom: 20px;
+        }
+
+        ol>li:before {
+            margin-right: 10px;
+            content: counter(item);
+            background: crimson;
+            border-radius: 100%;
+            color: white;
+            width: 1.3em;
+            text-align: center;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Class Inheritance</h1>
+
+    <ol>
+        <li><em>Inheriting from a Parent Class</em></li>
+
+        <script>
+            // the parent class is just a regular class
+            class ParentCorporation {
+                constructor(name) {
+                    this.name = name;
+                    this.menu = ["Big Mac", "Fries", "Milkshake"];
+                    this.slogan = "I'm loving it";
+                }
+                brandJingle() {
+                    return "Bah bah bah…" + this.slogan;
+                }
+            };
+
+            // extends allows us to borrow from ParentCorporation
+            class Store extends ParentCorporation {
+                // the constructor function borrows name from parent
+                // thanks to super() method. name is passed in as parameter
+                // to the ParentCorporation class 
+                constructor(address, localCuisine, name) {
+                    super(name);
+                    this.address = address;
+                    this.localCuisine = localCuisine;
+                }
+                greeting() {
+                    // All properties and methods from ParentCorporation are usable
+                    // in Store class. Notice this.brandJingle(), this.name and this.menu
+                    alert(this.brandJingle() + ". Welcome to " + this.address + " " + this.name);
+                    const fullMenu = [...this.menu];         // … look up js spread operator
+                    fullMenu.push(...this.localCuisine);        // merging two arrays for full menu
+                    alert("Full Menu: " + fullMenu.join(", "));
+                }
+            };
+
+            //      “address”, [ localCuisine ],    “name”
+            const canadaMcD = new Store("Canada", ["Poutine"], "McDonalds");
+            const franceMcD = new Store("France", ["Wine", "Fondu"], "McDonalds");
+            const japanMcD = new Store("Japan", ["Sushi"], "McDonalds");
+
+            // Calling the greeting() method on the franceMcD object as shown below would produce 2 different alerts.
+            franceMcD.greeting();
+            canadaMcD.greeting();
+            japanMcD.greeting();
+
+        </script>
+    </ol>
+</body>
+
+</html>

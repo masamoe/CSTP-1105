@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Assignment 1</title>
+        <style>
+            body {
+                font-family: helvetica;
+            }
+            h1 {
+                color: crimson;
+            }
+            em { 
+                font-weight: bold; 
+                font-style: normal; 
+                text-decoration: underline; 
+                font-size: 1.2em; 
+            }
+            li {
+                margin: 20px;
+            }
+            ol { 
+                width: 700px; 
+                position: relative; 
+                left: 50%; 
+                margin-left: -350px;
+            }
+            p { 
+                width: 700px; 
+                position: relative; 
+                left: 50%; 
+                margin-left: -350px;
+            }
+            h1 {
+                text-align:center;
+            }
+            ul > li {
+                margin-top: 0; 
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+
+    <h1>Introduction to Programming Assignment 1</h1>
+
+        <p>
+            Complete the following tasks.
+            <br>
+            <em>60%</em> of the marks will go to successfully completing the tasks free of errors.
+            <br>
+            <em>20%</em> of the marks will go to how well you comment your code. This also incorporates good naming conventions for variables.
+            <br>
+            <em>20%</em> of the marks will go to how efficient your code is using the methods you have learned to this point.
+        </p>
+
+        <ol>
+
+            <li><em>Complicated Tax Calculator</em>
+                <br/>
+                In a previous class you wrote pseudocode and flow charts to calculate tax. This problem is very similar to that but may contain some changes and additions.<br>
+                Write code that will ask the user, using a prompt, what their monthly gross income is. If the user doesn't type in a number tell them their mistake with an alert and do not proceed with the calculation.
+                <ul>
+                    <li>If the user earns less than or equal to 500 dollars the tax taken is 0 and they are in the low tax bracket. Only for these people should you do the following. Ask the user how many children they have. For each child that they have, give them 10 dollars in child benefits. If the user does not type in a number they get 0 dollars in child benefits.</li>
+                    <li>If the user earns more than 500 dollars but less than or equal to 700 they are in the medium tax bracket. Tax taken here should be 15% of any sum that is over 500.</li>
+                    <li>If the user earns more than 700 dollars they are in the high tax bracket. Tax taken here should be 15% of the sum that is over 500 but less than or equal to 700 and 25% of everything over 700.</li>
+                </ul>
+                The final result should show in a single alert the user's gross income, the tax bracket (low, medium or high), total tax, child benefits and net income (gross + child benefits - tax).
+
+                <p>Gross Salary = 400, Number of Kids = 2, Bracket = Low, Net Income = 420<br>
+                   Gross Salary = 620, Bracket = Medium, Net Income = 602<br>
+                   Gross Salary = 900, Bracket = High, Net Income = 820.15</p>
+            </li>
+
+            <script>
+                // ====================
+                // 1.) Complicated Tax Calculator
+                // ====================
+
+                // Here I am prompting the user to define their gross monthly income and defining child benefit as zero to allow later calculation in netInc if bracket is not Low.
+                    var gross = parseFloat(prompt("Please tell me your gross monthly income."));
+                    var cB = 0
+
+                //From there I check if they've entered a number, ending the operation if not.
+                    if (isNaN(gross)) {
+                        alert("Please type in natural number!");
+                    }
+                    else {
+                //If they did enter a number we begin the operation by checking if it's in the first Bracket, less than or equal to $500. If so, tB(tax bracket) is assigned as "Low" and tax is set to zero.
+                        if (gross <= 500){
+                            tB = "Low";
+                            tax = 0;
+                //Here I ask the user how many kids they have and multiply it by 10 to define cB (per child benefit).
+                            kids = parseInt(prompt("How many children do you have?"));
+                            cB = kids * 10;
+                        }
+                //I move on to checking the next bracket. Similar operation as above, though now without checking for kids.
+                        else if (gross > 500 && gross <= 700) {
+                            tB = "Medium";
+                //To get their tax charge I subtract 500 from the gross and only apply the tax % to the difference.
+                            tax = ((gross - 500) * 0.15);
+                        }
+                //After all other options are exhausted, all that remains is the highest bracket, so I don't need any conditionals.
+                        else {
+                            tB = "High";
+                //Similar operation though with the added complexity of not taxing the upper-most bracket twice for everything over 700.
+                            tax = ((gross - 500 - (gross - 700)) * 0.15) + ((gross - 700) * 0.25);
+                        }
+                //We then calculate the net income based on the gross and calculated tax from their bracket, if they were low no tax is applied and their child benefit is added, otherwise the opposite happens.
+                        var netInc = (gross + cB - tax);
+                //I define an array for the alert to display. Using the array lets me splice in the extra comment for Low bracket users, without showing an empty comment for others.
+                        const msgArr = [`Gross Salary = $${gross}`, ` Bracket = ${tB}`, ` Net Income = $${netInc}`];
+                        if (tB == "Low") {
+                            msgArr.splice(1, 0, ` Number of Kids = ${kids}`);
+                        }
+                //Finally, we send the alert with our completed array.
+                        alert(msgArr);
+                    }
+                //Commenting actually helped me spot an issue I overlooked in my original code. Instead of using the cB variable I had put in a += to gross which applied the benefit directly. In typing out my process I realized this would have changed the gross and net values in the final alert rather than just gross.
+
+            </script>
+
+            <li><em>Person's Details</em>
+                <br>
+                Ask a user to type in their first and last name into a single prompt separated by a space. You can assume the user will do this correctly.<br>
+                In a single alert write the following message where the square brackets represents values:
+                <ul>
+                    <li>Hello [first and last name of user].</li>
+                    <li>Your name is [number of letters in name] letters long.</li>
+                    <li><i>depending on whether this is true or not show the following output</i> Your name begins with a vowel which is the letter [first letter of their name in capital letter]. <i>or</i> Your name beings with a consonant which is the letter [first letter of their name in capital letter].</li>
+                    <li>The last letter of your name is [last letter of their last name in lower case].</li>
+                </ul>
+            </li>
+
+            <script>
+                // =================== 
+                // 2.) Person's Details
+                // ===================
+
+                //To begin I prompt the user for their name with clear instructions.
+                    let userN = prompt("Please, type your first and last name, separated by a space.");
+                //I then define the properties I need for calculations: name length, first letter, last letter    
+                    let lengthN = userN.length - 1;
+                    var fLetter = (userN.charAt(0)).toUpperCase();
+                    var lLetter = (userN.charAt(lengthN)).toLowerCase();
+                //Here I define a couple arrays. One to compare the first letter against and the other to define the consistent phrases in my final alert.
+                    const vowel = ["A", "E", "I", "O", "U", "Y"];
+                    const altArr = [`Hello ${userN}`, ` your name is ${lengthN} letters long`, ` and the last letter of your name is ${lLetter}.`];
+                //Then I compare the first letter of the name against my vowel array. If it matches something I splice the vowel phrase into the alert array at index 2.
+                    if (vowel.indexOf(fLetter) >= 0) {
+                        altArr.splice(2, 0, ` your name begins with a vowel which is the letter ${fLetter}`);
+                    }
+                //If the first letter is not in my vowel array I splice the consonant phrase into the alert array at index 2.
+                    else {
+                        altArr.splice(2, 0, ` your name begins with a consonant which is the letter ${fLetter}`);
+                    }
+                //Lastly I send the alert with my completed array
+                    alert(altArr);
+
+            </script>
+        </ol>    
+    </body>
+</html>
