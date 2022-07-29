@@ -4,12 +4,12 @@
     1.) Updating a CSV file
     You are given a CSV file called exam_results.csv which contains three
     exam results for 4 students each. The first line contains the names
-    of the students. The next three lines contain the results. Commas (,)
+    of the students. The next three lines_list contain the results. Commas (,)
     separate each piece of data from each other while the new line denotes
     a new row of data. 
 
     Write a function that takes in this file, adds "Total" and "Average"
-    to the top line and then for each of the other lines place the 
+    to the top line and then for each of the other lines_list place the 
     sum/total of all the numbers in that row and beside that place the
     average of the numbers of that row. These values should be floats.
     Make sure to do this in the same file 
@@ -34,7 +34,27 @@ Mark, Bobby, Susan, Mary, Total, Average
 """
 print("\nQ 1.")
 
-
+# defining my function which takes in the file
+def results_processor(file):
+# i turn the lines_list of the file into a list and add in the new headers before the \n
+    lines_list = file.readlines()
+    lines_list[0] = lines_list[0][:-1] + ", Total, Average" + lines_list[0][-1:]
+# looping through my lines_list, i split each line into a new list of scores/results
+    for line in lines_list[1:]:
+        results = line.split(", ")
+        total = 0
+# looping through the scores on each line, i cast them to a float and add them to the total for that line
+        for score in results:
+            total = total + float(score)
+# the line is modified in my lines_list to contain the new total and average scores
+        lines_list[lines_list.index(line)] = ", ".join(results) + f", {total}, {total/len(results)}"
+    file.seek(0)
+    file.write("".join(lines_list))
+    
+with open('exam_results.csv', mode='r+', encoding='utf-8') as results:
+    results_processor(results)
+    results.seek(0)
+    print(results.read())
 
 def restore_exam_results():
     print('exam_results HAS BEEN RESTORED TO ORIGINAL!')
@@ -46,9 +66,9 @@ def restore_exam_results():
 95, 79, 60, 54
 88, 81, 69, 84""")
 
-######################
-#restore_exam_results()
-######################
+
+restore_exam_results()
+
 
 
 
